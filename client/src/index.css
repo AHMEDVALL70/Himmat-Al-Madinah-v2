@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  font-family: "IBM Plex Sans Arabic", Manrope, sans-serif;
+  color: #f8f3e7;
+  background: #07111f;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+* { border-color: rgba(255,255,255,.12); }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background: #07111f; }
+button, input { font: inherit; }
+::selection { background: #d7b45a; color: #07111f; }
