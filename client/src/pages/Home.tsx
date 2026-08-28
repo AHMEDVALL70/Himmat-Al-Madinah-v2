@@ -90,12 +90,28 @@ export default function Home() {
   function reset() { setForm(initialForm); setResult(undefined); setStep(1); valuation.reset(); }
 
   return <div dir={dir} className="min-h-screen bg-[#07111f] text-[#f8f3e7] selection:bg-[#d7b45a] selection:text-[#07111f]">
-    <header className="sticky top-0 z-20 border-b border-white/10 bg-[#07111f]/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07111f]/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
         <a href="#top" className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center border border-[#d7b45a]/60 text-[#d7b45a]"><Sparkles size={18}/></div><div><div className="text-sm font-semibold tracking-[0.22em] text-[#d7b45a]">HIMMAT</div><div className="text-[10px] tracking-[0.3em] text-white/45">AL MADINAH</div></div></a>
-        <nav className="hidden items-center gap-8 text-sm text-white/60 md:flex">{t.nav.map((item, index) => <a key={item} href={index === 1 ? "#valuation" : index === 2 ? "#how" : "#top"} className="transition-colors hover:text-[#d7b45a]">{item}</a>)}</nav>
-        <div className="flex items-center gap-2"><Button variant="ghost" onClick={() => setLang(lang === "ar" ? "en" : "ar")} className="text-xs text-white/70 hover:bg-white/10 hover:text-white">{lang === "ar" ? "EN" : "عربي"}</Button><Button onClick={() => document.getElementById("valuation")?.scrollIntoView({ behavior: "smooth" })} className="bg-[#d7b45a] text-[#07111f] hover:bg-[#edd078]">{t.start}</Button></div>
-      </div>
+      <nav className="hidden items-center gap-8 text-sm text-white/60 md:flex">
+  {t.nav.map((item, index) => (
+    <a key={item} href={index === 1 ? "#valuation" : index === 2 ? "#how" : "#top"} className="transition-colors hover:text-[#d7b45a]">{item}</a>
+  ))}
+</nav>
+<div className="flex items-center gap-2">
+  <Button variant="ghost" onClick={() => setLang(lang === "ar" ? "en" : "ar")} className="text-xs text-white/70 hover:bg-white/10 hover:text-white">{lang === "ar" ? "EN" : "عربي"}</Button>
+  <Button onClick={() => document.getElementById("valuation")?.scrollIntoView({ behavior: "smooth" })} className="bg-[#d7b45a] text-[#07111f] hover:bg-[#edd078]">{t.start}</Button>
+</div>
+</div>
+<div className={(mobileMenuOpen ? "block" : "hidden") + " md:hidden border-t border-white/10 px-5 py-4 bg-[#07111f]"}>
+  <div className="flex flex-col gap-3">
+    {t.nav.map((item, index) => (
+      <a key={item} href={index === 1 ? "#valuation" : index === 2 ? "#how" : "#top"} className="text-sm text-white/80 hover:text-[#d7b45a] transition-colors" key={item}>
+        {item}
+      </a>
+    ))}
+  </div>
+</div>
     </header>
 
     <main id="top">
