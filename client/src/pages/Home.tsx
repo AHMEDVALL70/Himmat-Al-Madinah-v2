@@ -104,7 +104,9 @@ export default function Home() {
 
   {/* زر الهامبرغر لفتح وإغلاق القائمة في الجوال */}
   <Button variant="ghost" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-white p-2">
-    {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+   <Button variant="ghost" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-white p-2 text-xl">
+  {mobileMenuOpen ? "✕" : "☰"}
+</Button>
   </Button>
 </div>
 </div>
