@@ -105,8 +105,6 @@ export default function Home() {
     {mobileMenuOpen ? "✕" : "☰"}
   </Button>
 </div>
-  </Button>
-</div>
 </div>
 <div className={(mobileMenuOpen ? "block" : "hidden") + " md:hidden border-t border-white/10 px-5 py-4 bg-[#07111f]"}>
   <div className="flex flex-col gap-3">
