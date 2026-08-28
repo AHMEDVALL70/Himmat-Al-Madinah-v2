@@ -101,12 +101,10 @@ export default function Home() {
 <div className="flex items-center gap-2">
   <Button variant="ghost" onClick={() => setLang(lang === "ar" ? "en" : "ar")} className="text-xs text-white/70 hover:bg-white/10 hover:text-white">{lang === "ar" ? "EN" : "عربي"}</Button>
   <Button onClick={() => document.getElementById("valuation")?.scrollIntoView({ behavior: "smooth" })} className="bg-[#d7b45a] text-[#07111f] hover:bg-[#edd078]">{t.start}</Button>
-
-  {/* زر الهامبرغر لفتح وإغلاق القائمة في الجوال */}
-  <Button variant="ghost" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-white p-2">
-   <Button variant="ghost" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-white p-2 text-xl">
-  {mobileMenuOpen ? "✕" : "☰"}
-</Button>
+  <Button variant="ghost" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-white p-2 text-xl">
+    {mobileMenuOpen ? "✕" : "☰"}
+  </Button>
+</div>
   </Button>
 </div>
 </div>
