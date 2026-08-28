@@ -1,0 +1,38 @@
+[1mdiff --git a/client/src/pages/Home.tsx b/client/src/pages/Home.tsx[m
+[1mindex 6b399c1..f7d8986 100644[m
+[1m--- a/client/src/pages/Home.tsx[m
+[1m+++ b/client/src/pages/Home.tsx[m
+[36m@@ -1,5 +1,5 @@[m
+ import { useMemo, useState } from "react";[m
+[31m-import { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronUp, CircleDollarSign, FileCheck2, Gauge, LockKeyhole, MapPin, RotateCcw, Send, ShieldCheck, Sparkles } from "lucide-react";[m
+[32m+[m[32mimport { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronUp, CircleDollarSign, FileCheck2, Gauge, LockKeyhole, MapPin, Menu, RotateCcw, Send, ShieldCheck, Sparkles, X } from "lucide-react";[m
+ import { toast } from "sonner";[m
+ import { Button } from "@/components/ui/button";[m
+ import { Input } from "@/components/ui/input";[m
+[36m@@ -51,6 +51,7 @@[m [mfunction percent(value: number) { return `${Math.round(value)}%`; }[m
+ [m
+ export default function Home() {[m
+   const [lang, setLang] = useState<Lang>("ar");[m
+[32m+[m[32m  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);[m
+   const [step, setStep] = useState(1);[m
+   const [form, setForm] = useState<FormState>(initialForm);[m
+   const [result, setResult] = useState<Awaited<ReturnType<typeof trpc.valuation.submit.useMutation>>["data"]>(undefined);[m
+[36m@@ -90,11 +91,14 @@[m [mexport default function Home() {[m
+   function reset() { setForm(initialForm); setResult(undefined); setStep(1); valuation.reset(); }[m
+ [m
+   return <div dir={dir} className="min-h-screen bg-[#07111f] text-[#f8f3e7] selection:bg-[#d7b45a] selection:text-[#07111f]">[m
+[31m-    <header className="sticky top-0 z-20 border-b border-white/10 bg-[#07111f]/90 backdrop-blur-xl">[m
+[31m-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">[m
+[31m-        <a href="#top" className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center border border-[#d7b45a]/60 text-[#d7b45a]"><Sparkles size={18}/></div><div><div className="text-sm font-semibold tracking-[0.22em] text-[#d7b45a]">HIMMAT</div><div className="text-[10px] tracking-[0.3em] text-white/45">AL MADINAH</div></div></a>[m
+[32m+[m[32m    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07111f]/95 backdrop-blur-xl">[m
+[32m+[m[32m      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 lg:px-8">[m
+[32m+[m[32m        <a href="#top" onClick={() => setMobileMenuOpen(false)} className="flex shrink-0 items-center gap-3"><div className="flex h-10 w-10 items-center justify-center border border-[#d7b45a]/60 text-[#d7b45a]"><Sparkles size={18}/></div><div><div className="text-sm font-semibold tracking-[0.22em] text-[#d7b45a]">HIMMAT</div><div className="text-[10px] tracking-[0.3em] text-white/45">AL MADINAH</div></div></a>[m
+         <nav className="hidden items-center gap-8 text-sm text-white/60 md:flex">{t.nav.map((item, index) => <a key={item} href={index === 1 ? "#valuation" : index === 2 ? "#how" : "#top"} className="transition-colors hover:text-[#d7b45a]">{item}</a>)}</nav>[m
+[31m-        <div className="flex items-center gap-2"><Button variant="ghost" onClick={() => setLang(lang === "ar" ? "en" : "ar")} className="text-xs text-white/70 hover:bg-white/10 hover:text-white">{lang === "ar" ? "EN" : "عربي"}</Button><Button onClick={() => document.getElementById("valuation")?.scrollIntoView({ behavior: "smooth" })} className="bg-[#d7b45a] text-[#07111f] hover:bg-[#edd078]">{t.start}</Button></div>[m
+[32m+[m[32m        <div className="flex items-center gap-2"><Button variant="ghost" onClick={() => setLang(lang === "ar" ? "en" : "ar")} className="text-xs text-white/70 hover:bg-white/10 hover:text-white">{lang === "ar" ? "EN" : "عربي"}</Button><Button onClick={() => document.getElementById("valuation")?.scrollIntoView({ behavior: "smooth" })} className="hidden bg-[#d7b45a] text-[#07111f] hover:bg-[#edd078] sm:inline-flex">{t.start}</Button><Button variant="ghost" aria-label={mobileMenuOpen ? (lang === "ar" ? "إغلاق القائمة" : "Close menu") : (lang === "ar" ? "فتح القائمة" : "Open menu")} aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen((open) => !open)} className="inline-flex h-10 w-10 p-0 text-[#d7b45a] hover:bg-white/10 hover:text-[#efd47d] md:hidden">{mobileMenuOpen ? <X size={22}/> : <Menu size={22}/>}</Button></div>[m
+[32m+[m[32m      </div>[m
+[32m+[m[32m      <div className={`${mobileMenuOpen ? "block" : "hidden"} border-t border-white/10 bg-[#0b192b] md:hidden`}>[m
+[32m+[m[32m        <nav className="mx-auto grid max-w-7xl gap-1 px-5 py-3 lg:px-8">{t.nav.map((item, index) => <a key={item} href={index === 1 ? "#valuation" : index === 2 ? "#how" : "#top"} onClick={() => setMobileMenuOpen(false)} className="rounded-lg px-4 py-3 text-sm text-white/75 transition-colors hover:bg-white/10 hover:text-[#efd47d]">{item}</a>)}<Button onClick={() => { setMobileMenuOpen(false); document.getElementById("valuation")?.scrollIntoView({ behavior: "smooth" }); }} className="mt-2 w-full bg-[#d7b45a] text-[#07111f] hover:bg-[#edd078] sm:hidden">{t.start}</Button></nav>[m
+       </div>[m
+     </header>[m
+ [m
