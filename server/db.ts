@@ -1,6 +1,6 @@
 import { and, desc, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, marketComparables, InsertMarketComparable, users, valuationComparables, valuationRequests, valuationResults } from "../drizzle/schema";
+import { InsertUser, marketComparables, InsertMarketComparable, users, valuationComparables, valuationRequests, valuationResults, valuationImages, InsertValuationImage } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 import type { ValuationInput, ValuationResult } from "./valuation";
 
@@ -72,6 +72,21 @@ export async function createMarketComparable(input: InsertMarketComparable) {
   if (!db) throw new Error("Database is not configured");
   const inserted = await db.insert(marketComparables).values(input);
   return { id: Number(inserted[0].insertId), ...input };
+}
+
+export async function getValuationRequestByRef(ref: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not configured");
+  const rows = await db.select({ id: valuationRequests.id, consent: valuationRequests.consent }).from(valuationRequests).where(eq(valuationRequests.valuationRef, ref)).limit(1);
+  return rows[0];
+}
+
+export async function createValuationImages(rows: InsertValuationImage[]) {
+  if (!rows.length) return [];
+  const db = await getDb();
+  if (!db) throw new Error("Database is not configured");
+  await db.insert(valuationImages).values(rows);
+  return rows;
 }
 
 export async function createValuationRecord(ref: string, input: ValuationInput, result: ValuationResult) {

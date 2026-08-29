@@ -74,6 +74,18 @@ export const valuationComparables = mysqlTable("valuation_comparables", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
+export const valuationImages = mysqlTable("valuation_images", {
+  id: int("id").autoincrement().primaryKey(),
+  requestId: int("requestId").notNull(),
+  storageKey: varchar("storageKey", { length: 255 }).notNull(),
+  storageUrl: varchar("storageUrl", { length: 512 }).notNull(),
+  originalName: varchar("originalName", { length: 160 }).notNull(),
+  mimeType: varchar("mimeType", { length: 80 }).notNull(),
+  sizeBytes: int("sizeBytes").notNull(),
+  position: int("position").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 export type ValuationRequest = typeof valuationRequests.$inferSelect;
@@ -82,3 +94,5 @@ export type ValuationResult = typeof valuationResults.$inferSelect;
 export type ValuationComparable = typeof valuationComparables.$inferSelect;
 export type MarketComparable = typeof marketComparables.$inferSelect;
 export type InsertMarketComparable = typeof marketComparables.$inferInsert;
+export type ValuationImage = typeof valuationImages.$inferSelect;
+export type InsertValuationImage = typeof valuationImages.$inferInsert;

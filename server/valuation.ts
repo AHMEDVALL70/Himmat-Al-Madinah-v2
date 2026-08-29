@@ -15,6 +15,18 @@ export const marketComparableInputSchema = comparableInputSchema.extend({
   ageYears: z.coerce.number().int().min(0).max(150), condition: conditionSchema, saleDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid sale date"),
 });
 
+export const valuationImageInputSchema = z.object({
+  originalName: text(160, 1).transform((value) => value.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 120)),
+  mimeType: z.enum(["image/jpeg", "image/png", "image/webp"]),
+  sizeBytes: z.coerce.number().int().min(1).max(8 * 1024 * 1024),
+  position: z.coerce.number().int().min(0).max(4),
+  dataBase64: z.string().min(16).max(12_000_000).regex(/^[A-Za-z0-9+/]*={0,2}$/, "Invalid image payload"),
+});
+export const valuationImagesInputSchema = z.object({
+  valuationRef: z.string().regex(/^HM-[A-Z0-9]+-[A-Z0-9]+$/),
+  images: z.array(valuationImageInputSchema).max(5),
+});
+
 export const valuationInputSchema = z.object({
   customerName: optionalText(160), customerPhone: optionalText(32).transform((value) => value.replace(/[^+\d\s()-]/g, "").slice(0, 32)),
   customerEmail: z.string().optional().default("").transform((value) => sanitizeText(value).toLowerCase()).refine((value) => value === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), "Invalid email"),
@@ -26,6 +38,7 @@ export const valuationInputSchema = z.object({
   comparables: z.array(comparableInputSchema).max(20).optional().default([]),
 });
 export type ValuationInput = z.infer<typeof valuationInputSchema>;
+export type ValuationImageInput = z.infer<typeof valuationImageInputSchema>;
 
 export type ComparableSaleInput = ValuationInput["comparables"][number] & { pricePerSqm: number };
 export type ValuationResult = { lowPrice: number; highPrice: number; pointPrice: number; confidence: number; factors: Array<{ key: string; label: string; impact: string; detail: string }>; comparables: ComparableSaleInput[] };
