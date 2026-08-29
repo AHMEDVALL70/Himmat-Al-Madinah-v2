@@ -13,6 +13,13 @@ function Router() {
       ? "/Himmat-Al-Madinah-v2"
       : "";
 
+  const isGithubPagesRoot =
+    githubPagesBase !== "" && /^\/Himmat-Al-Madinah-v2\/?$/.test(window.location.pathname);
+
+  if (isGithubPagesRoot) {
+    return <Home />;
+  }
+
   return (
     <WouterRouter base={githubPagesBase}>
       <Switch>
